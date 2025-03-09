@@ -1,113 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Jared Connolly | Portfolio</title>
+    <meta name="description" content="Your Name is a creative designer crafting unique projects.">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div class="content">
-        <p>Coming Soon</p>
+    <div class="min-h-viewport">
+        <!-- Header -->
+        <header>
+            <div class="page-container">
+                <a href="/" title="Home">Jared Connolly</a>
+                <a href="mailto:your.email@example.com" title="Contact">Contact</a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="page-container">
+            <!-- Filters -->
+            <div class="filters">
+                <div class="flex">
+                    <label>
+                        <input type="radio" name="category" value="all" checked>
+                        <span>All</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="category1">
+                        <span>Category 1</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="category2">
+                        <span>Category 2</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div class="project-grid">
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <a href="#" title="Project One">Project One</a>
+                        <p>Category 1</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <a href="#" title="Project Two">Project Two</a>
+                        <p>Category 2</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <a href="#" title="Project Three">Project Three</a>
+                        <p>Category 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bio Section -->
+            <div class="bio-section">
+                <div class="bio-content">
+                    <div class="bio-text">
+                        <p>Your Name is a creative designer crafting unique projects. Interested in working together? <a href="mailto:your.email@example.com">Get in touch</a>.</p>
+                    </div>
+                    <div class="bio-details">
+                        <div>
+                            <h3>Services</h3>
+                            <p>Design<br>Development<br>Creative Direction</p>
+                        </div>
+                        <div>
+                            <h3>Collaborators</h3>
+                            <p>Studio A<br>Studio B<br>Studio C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="page-container">
+                <div class="flex">
+                    <a href="https://www.instagram.com/yourusername" target="_blank" title="Instagram">Instagram</a>
+                    <a href="mailto:your.email@example.com" title="your.email@example.com">your.email@example.com</a>
+                </div>
+            </div>
+        </footer>
     </div>
-    <canvas id="three-canvas"></canvas>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            if (typeof THREE === 'undefined') {
-                document.body.innerHTML = "<p>Three.js failed to load!</p>";
-                return;
-            }
-
-            const canvas = document.getElementById('three-canvas');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            const ambientLight = new THREE.AmbientLight(0x404040);
-            scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0x00ff80, 2, 100);
-            pointLight.position.set(0, 0, 5);
-            scene.add(pointLight);
-
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particleCount = 2000;
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 50;
-                positions[i + 1] = (Math.random() - 0.5) * 50;
-                positions[i + 2] = (Math.random() - 0.5) * 50;
-                colors[i] = 0;
-                colors[i + 1] = Math.random();
-                colors[i + 2] = 0.5;
-            }
-
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.1,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8
-            });
-            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particles);
-
-            const sphereGeometry = new THREE.SphereGeometry(1.5, 64, 64);
-            const sphereMaterial = new THREE.MeshPhongMaterial({
-                color: 0x00ff80,
-                emissive: 0x006640,
-                specular: 0xffffff,
-                shininess: 100,
-                wireframe: true
-            });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            scene.add(sphere);
-
-            camera.position.z = 10;
-
-            let mouseX = 0, mouseY = 0;
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-
-                sphere.rotation.x += 0.005;
-                sphere.rotation.y += 0.005;
-                const scale = 1.5 + Math.sin(Date.now() * 0.001) * 0.2;
-                sphere.scale.set(scale, scale, scale);
-
-                const positions = particles.geometry.attributes.position.array;
-                for (let i = 0; i < particleCount * 3; i += 3) {
-                    positions[i] += Math.sin(Date.now() * 0.001 + i) * 0.01;
-                    positions[i + 1] += Math.cos(Date.now() * 0.001 + i) * 0.01;
-                }
-                particles.geometry.attributes.position.needsUpdate = true;
-                particles.rotation.y += 0.001;
-
-                camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
-                camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
-                camera.lookAt(scene.position);
-
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        });
-    </script>
 </body>
 </html>
